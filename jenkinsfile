@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_USERNAME = credentials('docker-username')
+        DOCKER_PASSWORD = credentials('docker-password')
+        GKE_CREDENTIALS = credentials('gke-credentials')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/masvuc3m/tfg.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh './gradlew build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './gradlew test'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build("my-app:${env.BUILD_ID}")
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        dockerImage.push("${env.BUILD_ID}")
+                        dockerImage.push('latest')
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to GKE') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'GKE_CREDENTIALS', variable: 'KUBECONFIG')]) {
+                        sh 'kubectl apply -f k8s/deployment.yaml'
+                    }
+                }
+            }
+        }
+    }
+}
