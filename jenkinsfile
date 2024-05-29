@@ -6,12 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/masvuc3m/tfg.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 sh './gradlew build'
