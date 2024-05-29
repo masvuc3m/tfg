@@ -6,9 +6,9 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('build') {
             steps {
-                sh './gradlew build'
+                sh 'mvn --version'
             }
         }
 
