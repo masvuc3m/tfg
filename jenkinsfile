@@ -6,21 +6,21 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/masvuc3m/tfg.git'
-            }
-        }
-
         stage('Build') {
             steps {
-                sh './gradlew build'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
 
         stage('Test') {
             steps {
-                sh './gradlew test'
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+
             }
         }
 
