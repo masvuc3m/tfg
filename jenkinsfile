@@ -17,7 +17,7 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('tfg') {
                     sh "mvn sonar:sonar \
                     -Dsonar.projectKey=tfg \
                     -Dsonar.host.url=http://34.175.50.153:9000"
