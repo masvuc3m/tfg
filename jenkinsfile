@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        registry = "masvuc3m/tfg"
+        registry = 'masvuc3m/tfg'
         registryCredential = 'dckr_pat_p7Vg5QCYf-YcyU9rc6Zd_9rHTO8'
         dockerImage = ''
         GKE_CREDENTIALS = credentials('gke-credentials')
