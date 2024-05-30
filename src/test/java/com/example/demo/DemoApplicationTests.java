@@ -8,7 +8,10 @@ class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
-		DemoApplication test = new DemoApplication();
+		/*DemoApplication app = new DemoApplication();
+		String test = app.hello("World");*/
+		String args[] = {"World"};
+		DemoApplication.main(args);
 	}
 
 }
