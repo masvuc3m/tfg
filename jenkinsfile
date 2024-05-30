@@ -17,7 +17,7 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
-                mvn clean verify sonar:sonar -Dsonar.projectKey=tfg -Dsonar.projectName='tfg' -Dsonar.host.url=http://10.204.0.2:9000 -Dsonar.token=sqp_1f5374a1009cbd418715e9ebbcd6389097ada52d
+                sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=tfg -Dsonar.projectName='tfg' -Dsonar.host.url=http://10.204.0.2:9000 -Dsonar.token=sqp_1f5374a1009cbd418715e9ebbcd6389097ada52d'
             }
         }
 
