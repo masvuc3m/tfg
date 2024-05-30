@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         registry = 'masvuc3m/tfg'
-        registryCredential = '!NbaAcb1110!'
+        registryCredential = 'docker-credentials'
         dockerImage = ''
         GKE_CREDENTIALS = credentials('gke-credentials')
     }
