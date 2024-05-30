@@ -47,7 +47,7 @@ pipeline {
         stage('Deploy to GKE') {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'GKE_CREDENTIALS', variable: 'KUBECONFIG')]) {
+                    withCredentials([file(credentialsId: 'gke-credentials', variable: 'KUBECONFIG')]) {
                         sh 'kubectl apply -f k8s/deployment.yaml'
                     }
                 }
