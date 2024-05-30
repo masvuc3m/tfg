@@ -2,6 +2,9 @@ pipeline {
     agent any
 
     environment {
+        registry = "masvuc3m/tfg"
+        registryCredential = 'dckr_pat_p7Vg5QCYf-YcyU9rc6Zd_9rHTO8'
+        dockerImage = ''
         GKE_CREDENTIALS = credentials('gke-credentials')
     }
 
@@ -20,14 +23,13 @@ pipeline {
                 always {
                     junit 'target/surefire-reports/*.xml'
                 }
-
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("my-app:${env.BUILD_ID}")
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
         }
@@ -35,9 +37,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        dockerImage.push("${env.BUILD_ID}")
-                        dockerImage.push('latest')
+                    docker.withRegistry( '', registryCredential) {
+                        dockerImage.push()
                     }
                 }
             }
@@ -52,5 +53,10 @@ pipeline {
                 }
             }
         }
-    }
+
+        stage('Cleaning up') {
+            steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
 }
