@@ -10,6 +10,7 @@ class DemoApplicationTests {
 	void contextLoads() {
 		DemoApplication app = new DemoApplication();
 		String test = app.hello("World");
+		assert test!=null;
 	}
 
 }
