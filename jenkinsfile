@@ -58,7 +58,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'gke-credentials', variable: 'KUBECONFIG')]) {
-                        sh 'kubectl apply -f k8s/deployment.yaml --validate=false'
+                        sh 'kubectl apply -f k8s/deployment.yaml'
                     }
                 }
             }
