@@ -8,6 +8,9 @@ class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
+		DemoApplication app = new DemoApplication();
+		String test = app.hello("World");
+		assert test!=null : "metodo devuelve nulo";
 	}
 
 }
